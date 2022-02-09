@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.step.barley_breakstep.classes.Game;
+import com.step.barley_breakstep.classes.OnSwipeTouchListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,25 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        findViewById(R.id.mainLayout).setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()){
+            @Override
+            public void onSwipeRight(){
+                game.onMoveRight();
+            }
+            @Override
+            public void onSwipeLeft(){
+                game.onMoveLeft();
+            }
+            @Override
+            public void onSwipeTop(){
+                game.onMoveTop();
+            }
+            @Override
+            public void onSwipeBottom(){
+                game.onMoveBottom();
+            }
+        });
     }
 
     private void initGame() throws Exception {
