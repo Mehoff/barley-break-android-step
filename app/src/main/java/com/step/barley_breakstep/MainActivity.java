@@ -2,6 +2,8 @@ package com.step.barley_breakstep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -91,7 +93,24 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonShuffle = findViewById(R.id.btn_shuffle);
         buttonShuffle.setOnClickListener((e) -> {
-            game.shuffleField();
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure want to shuffle field?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    game.shuffleField();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Nothing
+                }
+            });
+
+            builder.create().show();
         });
     }
 }
