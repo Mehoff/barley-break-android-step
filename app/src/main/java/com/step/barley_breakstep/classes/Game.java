@@ -121,7 +121,7 @@ public class Game {
         }
     }
 
-    private void shuffleField(){
+    public void shuffleField(){
         this.shuffle(_field);
         setViewsTextToFieldValues();
         this.updateCellZeroIndex();

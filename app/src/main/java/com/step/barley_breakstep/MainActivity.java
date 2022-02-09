@@ -3,6 +3,7 @@ package com.step.barley_breakstep;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         game = new Game(this, textViews);
         game.init();
 
-        game.setupWinCondition();
+        Button buttonWin = findViewById(R.id.btn_win);
+        buttonWin.setOnClickListener((e) -> {
+            game.setupWinCondition();
+        });
+
+        Button buttonShuffle = findViewById(R.id.btn_shuffle);
+        buttonShuffle.setOnClickListener((e) -> {
+            game.shuffleField();
+        });
     }
 }

@@ -242,4 +242,34 @@
         </TableRow>
     </TableLayout>
 
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TableRow
+            android:layout_width="match_parent"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_win"
+                android:text="@string/btn_win_text"
+                android:background="@drawable/cell_shape"
+                android:layout_margin="5dp"
+                >
+            </Button>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_shuffle"
+                android:text="@string/btn_shuffle_text"
+                android:background="@drawable/cell_shape"
+                android:layout_margin="5dp">
+            </Button>
+        </TableRow>
+
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,4 +16,7 @@
     <string name="cell13_text">13</string>
     <string name="cell14_text">14</string>
     <string name="cell15_text">15</string>
+    <string name="btn_win_text">Setup win condition</string>
+    <string name="btn_shuffle_text">Shuffle</string>
+
 </resources>
