@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Barley-Break Step</string>
+    <string name="cell0_text"> </string>
+    <string name="cell1_text">1</string>
+    <string name="cell2_text">2</string>
+    <string name="cell3_text">3</string>
+    <string name="cell4_text">4</string>
+    <string name="cell5_text">5</string>
+    <string name="cell6_text">6</string>
+    <string name="cell7_text">7</string>
+    <string name="cell8_text">8</string>
+    <string name="cell9_text">9</string>
+    <string name="cell10_text">10</string>
+    <string name="cell11_text">11</string>
+    <string name="cell12_text">12</string>
+    <string name="cell13_text">13</string>
+    <string name="cell14_text">14</string>
+    <string name="cell15_text">15</string>
 </resources>
