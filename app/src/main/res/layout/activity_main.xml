@@ -20,6 +20,22 @@
             android:layout_width="match_parent"
             android:gravity="center">
             <TextView
+                android:id="@+id/textView_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/sky_blue"
+                android:textSize="48sp"
+                android:textAlignment="center"
+                android:text="@string/textView_count_text"
+                app:layout_constraintLeft_toLeftOf="@+id/mainLayout"
+                app:layout_constraintRight_toRightOf="@+id/mainLayout">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:gravity="center">
+            <TextView
                 android:id="@+id/cell_1"
                 android:background="@drawable/cell_shape"
                 android:gravity="center"

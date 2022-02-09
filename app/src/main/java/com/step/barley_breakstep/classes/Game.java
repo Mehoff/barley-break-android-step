@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.step.barley_breakstep.MainActivity;
+import com.step.barley_breakstep.R;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -23,6 +24,8 @@ public class Game {
     private int _cellZeroIndex;
     private AppCompatActivity _activity;
     private TextView[] _textViews;
+
+    public int movesCount = 0;
 
     public Game(AppCompatActivity activity, TextView[] textViews) throws Exception {
         if(textViews.length != SIZE){
@@ -83,6 +86,8 @@ public class Game {
     private void makeMove(){
         setViewsTextToFieldValues();
         this.updateCellZeroIndex();
+        movesCount++;
+        this.updateCount();
         if(this.checkWin()){
             Win();
         }
@@ -90,7 +95,7 @@ public class Game {
 
     private void Win(){
         AlertDialog.Builder builder = new AlertDialog.Builder(_activity);
-        builder.setMessage("Want to replay?");
+        builder.setMessage("You won with " + movesCount + " moves! Do you want a replay?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -109,6 +114,7 @@ public class Game {
 
     private void Replay() {
         this.shuffleField();
+
     }
 
     private void setViewsTextToFieldValues(){
@@ -125,6 +131,8 @@ public class Game {
         this.shuffle(_field);
         setViewsTextToFieldValues();
         this.updateCellZeroIndex();
+        this.movesCount = 0;
+        updateCount();
     }
 
     private void shuffle(int[] ar)
@@ -147,6 +155,11 @@ public class Game {
             }
         }
         this._cellZeroIndex = -1;
+    }
+
+    private void updateCount(){
+        TextView view = _activity.findViewById(R.id.textView_count);
+        view.setText(movesCount + "");
     }
 
     private boolean checkWin(){
