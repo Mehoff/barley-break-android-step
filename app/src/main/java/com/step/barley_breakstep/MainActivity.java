@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
         textViews[14] = cell15;
         textViews[15] = cell0;
 
-        game = new Game(textViews);
+        game = new Game(this, textViews);
         game.init();
+
+        game.setupWinCondition();
     }
 }

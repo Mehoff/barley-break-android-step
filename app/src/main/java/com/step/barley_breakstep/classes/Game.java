@@ -1,9 +1,13 @@
 package com.step.barley_breakstep.classes;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Debug;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.step.barley_breakstep.MainActivity;
 
@@ -17,12 +21,14 @@ public class Game {
     private final String TAG = "MyApp";
     private int[] _field;
     private int _cellZeroIndex;
+    private AppCompatActivity _activity;
     private TextView[] _textViews;
 
-    public Game(TextView[] textViews) throws Exception {
+    public Game(AppCompatActivity activity, TextView[] textViews) throws Exception {
         if(textViews.length != SIZE){
             throw new Exception("Text views array length must be size of: " + SIZE + ", got: " + textViews.length);
         }
+        _activity = activity;
         _textViews = textViews;
         _field = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9, 10, 11, 12 ,13, 14, 15 };
         _cellZeroIndex = 0;
@@ -33,67 +39,78 @@ public class Game {
     }
 
 
-
-
     public void onMoveRight(){
-
-        // From ["4"] [" "]
-        // To   [" "] ["4"]
-        //Log.i(TAG, "onMoveRight [cellZeroIndex]: " + _cellZeroIndex + " with index " + (_cellZeroIndex - 1) + "[" + _field[_cellZeroIndex - 1] + "]");
-
-
         if(_cellZeroIndex % BORDER_SIZE != 0){
             int temp = _field[_cellZeroIndex - 1];
             _field[_cellZeroIndex - 1] = 0;
             _field[_cellZeroIndex] = temp;
-            setViewsTextToFieldValues();
-            this.updateCellZeroIndex();
+            makeMove();
         }
     }
-
-    // From [" "] ["4"]
-    // To   ["4"] [" "]
     public void onMoveLeft(){
-        //Log.i(TAG, "onMoveLeft [cellZeroIndex]: " + _cellZeroIndex + " with index " + (_cellZeroIndex + 1) + "[" + _field[_cellZeroIndex + 1] + "]");
-
         if((_cellZeroIndex + 1) % BORDER_SIZE != 0){
             int temp = _field[_cellZeroIndex + 1];
             _field[_cellZeroIndex + 1] = 0;
             _field[_cellZeroIndex] = temp;
-            setViewsTextToFieldValues();
-            this.updateCellZeroIndex();
+            makeMove();
         }
     }
 
     public void onMoveTop(){
-        //Log.i(TAG, "onMoveTop [cellZeroIndex]: " + _cellZeroIndex + " with index " + (_cellZeroIndex + BORDER_SIZE) + "[" + _field[_cellZeroIndex + BORDER_SIZE] + "]");
-
-        // 12 + 4 <= 16 - 1
         if((_cellZeroIndex + BORDER_SIZE) <= (SIZE - 1)){
             int temp = _field[_cellZeroIndex + BORDER_SIZE];
             _field[_cellZeroIndex + BORDER_SIZE] = 0;
             _field[_cellZeroIndex] = temp;
-            setViewsTextToFieldValues();
-            this.updateCellZeroIndex();
+            makeMove();
         }
     }
-    // [0]  [1]  [2] [3]
-    // [4]  [5]  [6] [7]
-    // [8]  [9]  [10] [11]
-    // [12] [13] [14] [15]
-
 
     public void onMoveBottom(){
-        //Log.i(TAG, "onMoveBottom [cellZeroIndex]: " + _cellZeroIndex + " with index " + (_cellZeroIndex - BORDER_SIZE) + "[" + _field[_cellZeroIndex - BORDER_SIZE] + "]");
-
         if(_cellZeroIndex >= BORDER_SIZE){
             int temp = _field[_cellZeroIndex - BORDER_SIZE];
             _field[_cellZeroIndex - BORDER_SIZE] = 0;
             _field[_cellZeroIndex] = temp;
-            setViewsTextToFieldValues();
-            this.updateCellZeroIndex();
+            makeMove();
         }
     }
+
+    public void setupWinCondition(){
+        _field = new int[]
+        { 1, 2, 3, 4, 5, 6, 7 ,8 ,9, 10, 11, 12 ,13, 14, 0, 15 };
+        makeMove();
+    }
+
+    private void makeMove(){
+        setViewsTextToFieldValues();
+        this.updateCellZeroIndex();
+        if(this.checkWin()){
+            Win();
+        }
+    }
+
+    private void Win(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(_activity);
+        builder.setMessage("Want to replay?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Replay();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Nothing or close app
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void Replay() {
+        this.shuffleField();
+    }
+
     private void setViewsTextToFieldValues(){
         for(int i = 0; i < SIZE; i++){
             if(_field[i] == 0){
@@ -130,5 +147,19 @@ public class Game {
             }
         }
         this._cellZeroIndex = -1;
+    }
+
+    private boolean checkWin(){
+        for(int i = 0; i < SIZE - 1; i++){
+            Log.i(TAG,"_field[i]: " + _field[i]);
+            Log.i(TAG,"[i + 1]: " + (i + 1));
+
+            if(_field[i] != (i + 1)){
+                Log.i(TAG,"NOT WIN!");
+                return false;
+            }
+        }
+        Log.i(TAG,"WIN!");
+        return true;
     }
 }
